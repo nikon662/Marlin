@@ -2232,7 +2232,7 @@
  *   Resolution: TFT_WIDTH and TFT_HEIGHT
  *   Interface:  TFT_INTERFACE_FSMC or TFT_INTERFACE_SPI
  */
-#define TFT_GENERIC
+//#define TFT_GENERIC
 
 /**
  * TFT UI - User Interface Selection. Enable one of the following options:
