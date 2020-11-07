@@ -173,7 +173,11 @@
 
 // Shared FSMC Configs
 #if HAS_FSMC_TFT
+<<<<<<< HEAD
   #define DOGLCD_MOSI                       -1    // Prevent auto-define by Conditionals_post.h
+=======
+  #define DOGLCD_MOSI                       -1    // prevent redefine Conditionals_post.h
+>>>>>>> 2.0.x
   #define DOGLCD_SCK                        -1
 
   #define FSMC_CS_PIN                       PD7   // NE4
@@ -203,7 +207,11 @@
 #endif
 
 // XPT2046 Touch Screen calibration
+<<<<<<< HEAD
 #if ANY(HAS_TFT_LVGL_UI_FSMC, TFT_COLOR_UI, TFT_CLASSIC_UI) && ENABLED(TFT_RES_480x320)
+=======
+#if EITHER(TFT_LVGL_UI_FSMC, TFT_480x320)
+>>>>>>> 2.0.x
   #ifndef XPT2046_X_CALIBRATION
     #define XPT2046_X_CALIBRATION          17880
   #endif
@@ -216,7 +224,24 @@
   #ifndef XPT2046_Y_OFFSET
    #define XPT2046_Y_OFFSET                  349
   #endif
+<<<<<<< HEAD
 #elif EITHER(TFT_COLOR_UI, TFT_CLASSIC_UI) && ENABLED(TFT_RES_320x240)
+=======
+#elif ENABLED(TFT_CLASSIC_UI)
+  #ifndef XPT2046_X_CALIBRATION
+    #define XPT2046_X_CALIBRATION          12149
+  #endif
+  #ifndef XPT2046_Y_CALIBRATION
+    #define XPT2046_Y_CALIBRATION          -8746
+  #endif
+  #ifndef XPT2046_X_OFFSET
+    #define XPT2046_X_OFFSET                 -35
+  #endif
+  #ifndef XPT2046_Y_OFFSET
+    #define XPT2046_Y_OFFSET                 256
+  #endif
+#elif ENABLED(TFT_320x240)
+>>>>>>> 2.0.x
   #ifndef XPT2046_X_CALIBRATION
     #define XPT2046_X_CALIBRATION         -12246
   #endif

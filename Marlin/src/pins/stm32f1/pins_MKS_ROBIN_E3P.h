@@ -270,6 +270,7 @@
 
 #endif
 
+<<<<<<< HEAD
 #if HAS_SPI_GRAPHICAL_TFT
   // Emulated DOGM SPI
   #define LCD_PINS_ENABLE                   PD13
@@ -277,6 +278,24 @@
   #define BTN_ENC                           PE13
   #define BTN_EN1                           PE8
   #define BTN_EN2                           PE11
+=======
+#if ENABLED(SPI_GRAPHICAL_TFT)
+  // Emulated DOGM SPI
+  #ifndef GRAPHICAL_TFT_UPSCALE
+    #define GRAPHICAL_TFT_UPSCALE              3
+  #endif
+  #ifndef TFT_PIXEL_OFFSET_Y
+    #define TFT_PIXEL_OFFSET_Y                32
+  #endif
+
+  #define BTN_ENC                           PE13
+  #define BTN_EN1                           PE8
+  #define BTN_EN2                           PE11
+
+  #define LCD_PINS_ENABLE                   PD13
+  #define LCD_PINS_RS                       PC6
+
+>>>>>>> 2.0.x
 #elif ENABLED(TFT_480x320_SPI)
   #define TFT_DRIVER                      ST7796
   #define TFT_BUFFER_SIZE                  14400
@@ -296,7 +315,11 @@
   #ifndef XPT2046_Y_OFFSET
     #define XPT2046_Y_OFFSET                 -24
   #endif
+<<<<<<< HEAD
 #elif HAS_SPI_GRAPHICAL_TFT
+=======
+#elif ENABLED(SPI_GRAPHICAL_TFT)
+>>>>>>> 2.0.x
   #ifndef XPT2046_X_CALIBRATION
     #define XPT2046_X_CALIBRATION         -11386
   #endif

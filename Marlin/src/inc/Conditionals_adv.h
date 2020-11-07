@@ -33,7 +33,7 @@
 // Determine NUM_SERVOS if none was supplied
 #ifndef NUM_SERVOS
   #define NUM_SERVOS 0
-  #if ANY(HAS_Z_SERVO_PROBE, CHAMBER_VENT, SWITCHING_TOOLHEAD, SWITCHING_EXTRUDER, SWITCHING_NOZZLE, SPINDLE_SERVO)
+  #if ANY(CHAMBER_VENT, HAS_Z_SERVO_PROBE, SWITCHING_EXTRUDER, SWITCHING_NOZZLE)
     #if NUM_SERVOS <= Z_PROBE_SERVO_NR
       #undef NUM_SERVOS
       #define NUM_SERVOS (Z_PROBE_SERVO_NR + 1)
@@ -61,10 +61,6 @@
     #if NUM_SERVOS <= SWITCHING_EXTRUDER_E23_SERVO_NR
       #undef NUM_SERVOS
       #define NUM_SERVOS (SWITCHING_EXTRUDER_E23_SERVO_NR + 1)
-    #endif
-    #if NUM_SERVOS <= SPINDLE_SERVO_NR
-      #undef NUM_SERVOS
-      #define NUM_SERVOS (SPINDLE_SERVO_NR + 1)
     #endif
   #endif
 #endif
@@ -152,7 +148,7 @@
 
 #if ANY(MARLIN_BRICKOUT, MARLIN_INVADERS, MARLIN_SNAKE, MARLIN_MAZE)
   #define HAS_GAMES 1
-  #if MANY(MARLIN_BRICKOUT, MARLIN_INVADERS, MARLIN_SNAKE, MARLIN_MAZE)
+  #if (1 < ENABLED(MARLIN_BRICKOUT) + ENABLED(MARLIN_INVADERS) + ENABLED(MARLIN_SNAKE) + ENABLED(MARLIN_MAZE))
     #define HAS_GAME_MENU 1
   #endif
 #endif
@@ -167,7 +163,7 @@
 #if EITHER(MIN_SOFTWARE_ENDSTOPS, MAX_SOFTWARE_ENDSTOPS)
   #define HAS_SOFTWARE_ENDSTOPS 1
 #endif
-#if ANY(EXTENSIBLE_UI, IS_NEWPANEL, EMERGENCY_PARSER, HAS_ADC_BUTTONS, DWIN_CREALITY_LCD)
+#if ANY(EXTENSIBLE_UI, NEWPANEL, EMERGENCY_PARSER, HAS_ADC_BUTTONS, DWIN_CREALITY_LCD)
   #define HAS_RESUME_CONTINUE 1
 #endif
 
@@ -182,35 +178,16 @@
   #define HAS_MOTOR_CURRENT_I2C 1
 #endif
 
-#if ENABLED(Z_STEPPER_AUTO_ALIGN)
-  #if ENABLED(Z_STEPPER_ALIGN_KNOWN_STEPPER_POSITIONS)
-    #undef Z_STEPPER_ALIGN_AMP
-  #endif
-  #ifndef Z_STEPPER_ALIGN_AMP
-    #define Z_STEPPER_ALIGN_AMP 1.0
-  #endif
-#endif
-
 // Multiple Z steppers
 #ifndef NUM_Z_STEPPER_DRIVERS
   #define NUM_Z_STEPPER_DRIVERS 1
 #endif
 
-// Fallback Stepper Driver types that depend on Configuration_adv.h
-#if NONE(DUAL_X_CARRIAGE, X_DUAL_STEPPER_DRIVERS)
-  #undef X2_DRIVER_TYPE
+#if ENABLED(Z_STEPPER_ALIGN_KNOWN_STEPPER_POSITIONS)
+  #undef Z_STEPPER_ALIGN_AMP
 #endif
-#if DISABLED(Y_DUAL_STEPPER_DRIVERS)
-  #undef Y2_DRIVER_TYPE
-#endif
-#if NUM_Z_STEPPER_DRIVERS < 2
-  #undef Z2_DRIVER_TYPE
-#endif
-#if NUM_Z_STEPPER_DRIVERS < 3
-  #undef Z3_DRIVER_TYPE
-#endif
-#if NUM_Z_STEPPER_DRIVERS < 4
-  #undef Z4_DRIVER_TYPE
+#ifndef Z_STEPPER_ALIGN_AMP
+  #define Z_STEPPER_ALIGN_AMP 1.0
 #endif
 
 //
@@ -231,7 +208,10 @@
   #define NEEDS_HARDWARE_PWM 1
 #endif
 
-#if !defined(__AVR__) || !defined(USBCON)
+#if defined(__AVR__) && defined(USBCON)
+  #define IS_AT90USB 1
+  #undef SERIAL_XON_XOFF // Not supported on USB-native devices
+#else
   // Define constants and variables for buffering serial data.
   // Use only 0 or powers of 2 greater than 1
   // : [0, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, ...]
@@ -243,9 +223,6 @@
   #ifndef TX_BUFFER_SIZE
     #define TX_BUFFER_SIZE 32
   #endif
-#else
-  // SERIAL_XON_XOFF not supported on USB-native devices
-  #undef SERIAL_XON_XOFF
 #endif
 
 #if ENABLED(HOST_ACTION_COMMANDS)
