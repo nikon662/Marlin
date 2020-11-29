@@ -169,44 +169,21 @@
   // Color UI
   #define TFT_DRIVER                     ILI9488
   #define TFT_BUFFER_SIZE                  14400
-<<<<<<< HEAD
 #endif
 
 // XPT2046 Touch Screen calibration
 #if ANY(TFT_LVGL_UI, TFT_COLOR_UI, TFT_CLASSIC_UI)
-=======
-#elif ENABLED(TFT_CLASSIC_UI)
-  // Emulated DOGM
-  #define GRAPHICAL_TFT_UPSCALE                3
-#endif
-
-// XPT2046 Touch Screen calibration
-#if EITHER(TFT_LVGL_UI, TFT_COLOR_UI)
-  #ifndef XPT2046_X_CALIBRATION
-    #define XPT2046_X_CALIBRATION         -17181
+  #ifndef TOUCH_CALIBRATION_X
+    #define TOUCH_CALIBRATION_X           -17181
   #endif
-  #ifndef XPT2046_Y_CALIBRATION
-    #define XPT2046_Y_CALIBRATION          11434
+  #ifndef TOUCH_CALIBRATION_Y
+    #define TOUCH_CALIBRATION_Y            11434
   #endif
-  #ifndef XPT2046_X_OFFSET
-    #define XPT2046_X_OFFSET                 501
+  #ifndef TOUCH_OFFSET_X
+    #define TOUCH_OFFSET_X                   501
   #endif
-  #ifndef XPT2046_Y_OFFSET
-    #define XPT2046_Y_OFFSET                  -9
-  #endif
-#elif ENABLED(TFT_CLASSIC_UI)
->>>>>>> 2.0.x
-  #ifndef XPT2046_X_CALIBRATION
-    #define XPT2046_X_CALIBRATION         -17181
-  #endif
-  #ifndef XPT2046_Y_CALIBRATION
-    #define XPT2046_Y_CALIBRATION          11434
-  #endif
-  #ifndef XPT2046_X_OFFSET
-    #define XPT2046_X_OFFSET                 501
-  #endif
-  #ifndef XPT2046_Y_OFFSET
-    #define XPT2046_Y_OFFSET                  -9
+  #ifndef TOUCH_OFFSET_Y
+    #define TOUCH_OFFSET_Y                    -9
   #endif
 #endif
 
